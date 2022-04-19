@@ -1,0 +1,22 @@
+{
+  "name": "scan-tables",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "scanLoansWithAutoPayOutOfSync": "cross-env AWS_SDK_LOAD_CONFIG=true AWS_PROFILE=$STAGE-profile ts-node src/scanLoansWithAutoPayOutOfSync.ts",
+    "updateLoansWithAutoPayIntent": "cross-env AWS_SDK_LOAD_CONFIG=true AWS_PROFILE=$STAGE-profile ts-node src/updateLoansWithAutoPayIntent.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.42.0",
+    "@aws-sdk/util-dynamodb": "^3.42.0",
+    "luxon": "^2.1.1"
+  },
+  "devDependencies": {
+    "@types/luxon": "^2.0.7",
+    "@types/node": "^16.11.9",
+    "cross-env": "^7.0.3",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.2"
+  }
+}
