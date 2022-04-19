@@ -5,7 +5,7 @@ import getLoansWithAutoPayOutOfSync from "./utils/getLoansWithAutoPayOutOfSync";
 async function main() {
   const loans = await getLoansWithAutoPayOutOfSync();
   await fs.writeFile(
-    `${process.env.STAGE}-loans-${DateTime.now().toISO()}.json`,
+    `./jsons/${process.env.STAGE}-loans-${DateTime.now().toISO()}.json`,
     JSON.stringify(loans, null, 2)
   );
 }

@@ -1,8 +1,5 @@
 import { TransactWriteItemsCommand } from "@aws-sdk/client-dynamodb";
-import fs from "fs/promises";
-import { DateTime } from "luxon";
 import { LOANS_TABLE } from "./constants";
-import { Loan } from "./types";
 import getDynamoClient from "./utils/getDynamoClient";
 import { chunk } from "./utils/getItems";
 

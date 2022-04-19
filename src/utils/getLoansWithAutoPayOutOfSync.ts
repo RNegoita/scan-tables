@@ -2,14 +2,7 @@ import { TransactWriteItemsCommand } from "@aws-sdk/client-dynamodb";
 import { CONSUMER_PAYMENT_INFO_TABLE, LOANS_TABLE } from "../constants";
 import { ConsumerPaymentInfo, Loan } from "../types";
 import getDynamoClient from "./getDynamoClient";
-import meow from "meow";
 import { chunk, getItems } from "./getItems";
-
-const cli = meow();
-
-const {
-  flags: { fixLoans },
-} = cli;
 
 const updateLoans = async (loans: Loan[]) => {
   const dynamodb = getDynamoClient();
@@ -46,7 +39,8 @@ const updateLoans = async (loans: Loan[]) => {
   }
 };
 
-const getLoansWithAutoPayOutOfSync = async (): Promise<String[]> => {
+const getLoansWithAutoPayOutOfSync = async (): Promise<string[]> => {
+  const fixLoans = process.env.FIX_LOANS === "true" ?? false;
   const loansScanCommandInput = {
     TableName: LOANS_TABLE,
     FilterExpression:
@@ -87,11 +81,12 @@ const getLoansWithAutoPayOutOfSync = async (): Promise<String[]> => {
       ) > -1
     );
   });
+
   console.log("Number of affected loans: ", filteredLoans.length);
-  if (filteredLoans.length > 0 && fixLoans) {
-    console.log("a mers");
-    //await updateLoans(filteredLoans);
+  if (fixLoans && filteredLoans.length > 0) {
+    await updateLoans(filteredLoans);
   }
+
   return filteredLoans.map((filteredLoan) => filteredLoan.id);
 };
 
