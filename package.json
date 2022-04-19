@@ -10,7 +10,8 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.42.0",
     "@aws-sdk/util-dynamodb": "^3.42.0",
-    "luxon": "^2.1.1"
+    "luxon": "^2.1.1",
+    "meow": "^10.1.2"
   },
   "devDependencies": {
     "@types/luxon": "^2.0.7",
