@@ -21,21 +21,17 @@ const updateLoans = async (loans: Loan[]) => {
     };
   });
   let transactions = 0;
-  let index = 1;
   const segmentsChunks = chunk(transactItems, 25);
   for (const segmentChunk of segmentsChunks) {
-    if (index === 1) {
-      const input = {
-        TransactItems: segmentChunk,
-      };
-      const command = new TransactWriteItemsCommand(input);
-      await dynamodb.send(command);
-      transactions += segmentChunk.length;
-      console.log(
-        `There are ${transactions} items updated out of ${transactItems.length}.`
-      );
-      index += 1;
-    }
+    const input = {
+      TransactItems: segmentChunk,
+    };
+    const command = new TransactWriteItemsCommand(input);
+    await dynamodb.send(command);
+    transactions += segmentChunk.length;
+    console.log(
+      `There are ${transactions} items updated out of ${transactItems.length}.`
+    );
   }
 };
 
